@@ -6,15 +6,22 @@ class Solution(object):
         """
         start = 0
         end = 0
-        longest = ""
+        
+        # If the string has no characters, return an empty string
+        if len(s) > 0:
+            longest = s[0]
+        else:
+            return ""
 
         # While there is enough of the string left to pass longest
         while(len(s)-start > len(longest)):
-            # Decrease length of string until a palindrome is found
-            for end in range(len(s), start, -1):
-                # If it's the longest, then replace longest
-                if(len(s[start:end]) > len(longest) and self.checkPalindrome(s[start:end])):
-                    longest = s[start:end]
+            # Decrease length of substring until a palindrome is found or the string is smaller than the longest
+            end = len(s)
+            while end-start+1 > len(longest) and not self.checkPalindrome(s[start:end]):
+                end -= 1
+            
+            if end-start > len(longest):
+                longest = s[start:end]
             start += 1
         return longest
 
